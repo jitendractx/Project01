@@ -1,10 +1,18 @@
 name: Terraform Deploy
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      action:
+        description: "Select Terraform Action"
+        required: true
+        default: plan
+        type: choice
+        options:
+          - validate
+          - plan
+          - apply
+          - destroy
 
 jobs:
   terraform:
@@ -27,24 +35,26 @@ jobs:
         run: |
           echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
 
-      - name: Verify GitHub Login
-        run: |
-          gh auth status
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.7.0  # or whichever version you need
+          terraform_version: 1.7.0
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Validate
+        if: github.event.inputs.action == 'validate'
         run: terraform validate
 
       - name: Terraform Plan
+        if: github.event.inputs.action == 'plan'
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+        if: github.event.inputs.action == 'apply'
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
+        run: terraform destroy -auto-approve
