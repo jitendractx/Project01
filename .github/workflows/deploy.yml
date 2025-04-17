@@ -1,4 +1,4 @@
-name: Terraform Plan and Apply for GitHub Repo
+name: Terraform Deploy
 
 on:
   push:
@@ -18,14 +18,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install gh -y
+      # - name: Install GitHub CLI
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install gh -y
 
-      - name: GitHub CLI Login
-        run: |
-          echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
+      # - name: GitHub CLI Login
+      #   run: |
+      #     echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
 
       - name: Verify GitHub Login
         run: |
