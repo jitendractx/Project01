@@ -9,6 +9,6 @@ terraform {
 
 # Configure the GitHub Provider
 provider "github" {
-    token = secret.my_access
+    token = secrets.GH_PAT
 }
 
