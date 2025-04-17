@@ -35,6 +35,11 @@ jobs:
         run: |
           echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
 
+      - name: Download Terraform State Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: terraform-state
+      
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
