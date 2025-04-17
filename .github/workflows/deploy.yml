@@ -15,7 +15,7 @@ on:
           - destroy
 
 jobs:
-  terraform:
+  upload_artifact:
     runs-on: ubuntu-latest
 
     env:
@@ -35,10 +35,7 @@ jobs:
         run: |
           echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
 
-      - name: Download Terraform State Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: terraform-state
+
       
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -59,14 +56,30 @@ jobs:
       - name: Terraform Apply
         if: github.event.inputs.action == 'apply'
         run: terraform apply -auto-approve
+             terraform output > terraform.tfstate
 
       - name: Terraform Destroy
         if: github.event.inputs.action == 'destroy'
         run: terraform destroy -auto-approve
-
+             terraform output > terraform.tfstate
 
       - name: Upload Terraform State as Artifact
         uses: actions/upload-artifact@v2
         with:
           name: terraform-state
           path: terraform.tfstate
+
+  download_artifact:
+    runs-on: ubuntu-latest
+    needs: upload_artifact
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Download Terraform State Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: terraform-state
+    
+      - name: Verify Artifact
+        run: cat terraform.tfstate
