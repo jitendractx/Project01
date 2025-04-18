@@ -62,7 +62,7 @@ jobs:
 
       - name: Upload Terraform State as Artifact
         if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: terraform-state
           path: terraform.tfstate
@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Terraform State Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: terraform-state
 
