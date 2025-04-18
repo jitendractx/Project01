@@ -17,7 +17,6 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-22.04
-    name: Terraform Deploy ${{ github.event.inputs.action }}
 
     env:
       TF_VAR_github_token: ${{ secrets.GH_PAT }}
@@ -65,3 +64,7 @@ jobs:
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
+
+      - name: Display Selected Action
+        run: |
+          echo "Selected action: ${{ github.event.inputs.action }}"
