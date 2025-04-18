@@ -1,4 +1,5 @@
-name: Terraform Deploy
+run-name: Deploy to ${{ github.event.inputs.action }} by @${{ github.actor }}
+#name: Terraform Deploy
 
 on:
   workflow_dispatch:
