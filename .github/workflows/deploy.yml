@@ -16,7 +16,7 @@ on:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     env:
       TF_VAR_github_token: ${{ secrets.GH_PAT }}
