@@ -1,4 +1,4 @@
-name: Terraform Deploy ${{ github.event.inputs.action | capitalize }}
+name: Terraform Deploy
 
 on:
   workflow_dispatch:
@@ -17,6 +17,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-22.04
+    name: Terraform Deploy ${{ github.event.inputs.action }}
 
     env:
       TF_VAR_github_token: ${{ secrets.GH_PAT }}
