@@ -66,11 +66,11 @@ jobs:
 
       - name: Terraform Plan
         if: ${{ github.event.inputs.action == 'plan' }}
-        run: terraform plan -var-file="${{ github.event.inputs.environment }}.tfvars" -state="terraform-${{ github.event.inputs.environment }}.tfstate"
+        run: terraform plan -var-file="${{ github.event.inputs.environment }}.tfvars" -state="dev-terraform-${{ github.event.inputs.environment }}.tfstate"
 
       - name: Terraform Apply
         if: ${{ github.event.inputs.action == 'apply' }}
-        run: terraform apply -auto-approve -var-file="${{ github.event.inputs.environment }}.tfvars" -state="terraform-${{ github.event.inputs.environment }}.tfstate"
+        run: terraform apply -auto-approve -var-file="${{ github.event.inputs.environment }}.tfvars" -state="qa-terraform-${{ github.event.inputs.environment }}.tfstate"
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
