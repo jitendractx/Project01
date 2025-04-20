@@ -58,9 +58,11 @@ jobs:
       
       - name: Terraform Init
         run: terraform init
-
-      - name: Select Workspace
-        run: terraform workspace select ${{ github.event.inputs.environment }}     
+        
+      - name: Set Terraform Cloud Workspace
+        run: |
+          echo "TF_WORKSPACE=myapp-${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+      
 
       - name: Terraform Validate
         if: ${{ github.event.inputs.action == 'validate' }}
