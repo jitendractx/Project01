@@ -51,13 +51,21 @@ jobs:
         with:
           terraform_version: 1.7.0
 
+      - name: Setup Terraform Credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          echo "{\"credentials\": {\"app.terraform.io\": {\"token\": \"${{ secrets.TFC_TOKEN }}\"}}}" > ~/.terraform.d/credentials.tfrc.json
       
       - name: Terraform Init
         run: terraform init
         
       - name: Select Workspace
         run: |
-          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
+          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}  
+      
+      # - name: Set Terraform Cloud Workspace
+      #   run: |
+      #     echo "TF_WORKSPACE=myapp-${{ github.event.inputs.environment }}" >> $GITHUB_ENV
       
 
       - name: Terraform Validate
@@ -70,7 +78,7 @@ jobs:
 
       - name: Terraform Apply
         if: ${{ github.event.inputs.action == 'apply' }}
-        run: terraform apply -auto-approve -var-file="${{ github.event.inputs.environment }}.tfvars" 
+        run: terraform apply -auto-approve 
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
