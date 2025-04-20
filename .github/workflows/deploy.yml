@@ -76,7 +76,7 @@ jobs:
         env:
           type: ${{ github.event.inputs.environment }}
         if: ${{ github.event.inputs.action == 'apply' }}
-        run: terraform apply -auto-approve -var-file="$env.type.tfvars" -state="terraform-$env.type.tfstate"
+        run: terraform apply -auto-approve -var-file="${{ env.type }}.tfvars" -state="terraform-${{ env.type }}.tfstate"
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
