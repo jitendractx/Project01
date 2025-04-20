@@ -5,13 +5,13 @@ variable "repo_01" {
 
 
 
-# variable "github_token" {
-#   description = "GitHub token for API access"
-#   type        = string
-#   sensitive   = true
-# }
+variable "github_token" {
+  description = "GitHub token for API access"
+  type        = string
+  sensitive   = true
+}
 
-# variable "github_owner" {
-#   description = "GitHub owner (user/org)"
-#   type        = string
-# }
+variable "github_owner" {
+  description = "GitHub owner (user/org)"
+  type        = string
+}
