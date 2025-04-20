@@ -55,12 +55,12 @@ jobs:
         run: |
           mkdir -p ~/.terraform.d
           echo "{\"credentials\": {\"app.terraform.io\": {\"token\": \"${{ secrets.TFC_TOKEN }}\"}}}" > ~/.terraform.d/credentials.tfrc.json
+      
+      - name: Terraform Init
+        run: terraform init
 
       - name: Select Workspace
         run: terraform workspace select ${{ github.event.inputs.environment }}     
-
-      - name: Terraform Init
-        run: terraform init
 
       - name: Terraform Validate
         if: ${{ github.event.inputs.action == 'validate' }}

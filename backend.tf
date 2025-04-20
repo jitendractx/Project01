@@ -3,7 +3,7 @@ terraform {
     organization = "MyCompany_25" 
 
     workspaces {
-      name = "myapp-"
+      name = ""
     }
   }
 }
