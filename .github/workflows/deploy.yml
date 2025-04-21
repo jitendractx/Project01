@@ -82,7 +82,9 @@ jobs:
           ENVIRONMENT: ${{ github.event.inputs.environment }}
           TFVARS_FILE: "${{ github.event.inputs.environment }}.tfvars"
           STATE_FILE: "terraform-${{ github.event.inputs.environment }}.tfstate"
-        run: terraform apply -auto-approve -var-file="$ENVIRONMENT.tfvars" -state="terraform-$ENVIRONMENT.tfstate"
+        run: terraform apply -auto-approve \
+          \-var-file="$ENVIRONMENT.tfvars" 
+          \-state="terraform-$ENVIRONMENT.tfstate"
 
 
       - name: Terraform Destroy
